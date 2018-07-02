@@ -1,12 +1,13 @@
-package starter;
+package node2node;
 
 import javax.ejb.Local;
 
-import domain.AgentCenter;
 
 @Local
 public interface SlaveStarterServiceBeanLocal {
 
-	void register();
+	boolean register();
+	
+	void unregister();
 	
 }

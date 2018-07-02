@@ -18,6 +18,7 @@ import domain.AgentCenter;
 @Startup
 public class PropertyBean {
 
+	private final String DELIMITER = ":";
 	private Properties props;
 	private AgentCenter master;
 	private AgentCenter local;
@@ -40,7 +41,10 @@ public class PropertyBean {
             
             master = new AgentCenter(masterAddress + ":" + portMaster, aliasMaster);
             local = new AgentCenter(localAddress + ":" + (portMaster + portOffset), aliasLocal);
+            
             agentTypes = Arrays.asList(agentTypesStr.split("\\s*,\\s*"));
+            int lastIdx = agentTypes.size()-1; 
+            agentTypes.set(lastIdx, agentTypes.get(lastIdx).trim());	//remove whitespaces of last if any
             
             System.out.println("master : " + master);
             System.out.println("local : " + local);

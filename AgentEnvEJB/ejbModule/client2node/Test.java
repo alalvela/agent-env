@@ -1,5 +1,6 @@
-package service;
+package client2node;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +9,14 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import beans.AgentRepositoryBeanLocal;
-import beans.NodeRepositoryBeanLocal;
+import domain.Agent;
 import domain.AgentCenter;
+import repository.AgentRepositoryBeanLocal;
+import repository.NodeRepositoryBeanLocal;
 
 @Path("/test")
 @Stateless
@@ -25,6 +28,9 @@ public class Test {
 	
 	@EJB
 	AgentRepositoryBeanLocal agentRepo;
+	
+	@EJB
+	AgentBuilderBean agentBuilder;
 	
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -44,5 +50,14 @@ public class Test {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Map<String, List<String>> getAgents() {
 		return agentRepo.getAllAgentTypes();
+	}
+	
+	
+	@GET
+	@Path("/agent/{type}")		//type ce biti TestAgent
+	@Produces(MediaType.APPLICATION_JSON)
+	public Agent getAgent(@PathParam("type") String moduleType) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+//		return agentBuilder.buildAgentFromClassName("noviAgent", "master", moduleType);
+		return null;
 	}
 }

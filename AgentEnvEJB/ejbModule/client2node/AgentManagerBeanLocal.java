@@ -1,4 +1,4 @@
-package beans;
+package client2node;
 
 import javax.ejb.Local;
 

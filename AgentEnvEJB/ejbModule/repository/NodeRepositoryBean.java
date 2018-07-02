@@ -1,4 +1,4 @@
-package beans;
+package repository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +29,21 @@ public class NodeRepositoryBean implements NodeRepositoryBeanLocal {
 	public void addNode(AgentCenter ac) {
 		nodes.put(ac.getAlias(), ac);
 	}
+	
+	@Override
+	@Lock(LockType.WRITE)
+	public void addNodes(List<AgentCenter> acs) {
+		acs.forEach(node -> {
+			nodes.put(node.getAlias(), node);
+		});
+	}
 
 	@Override
 	@Lock(LockType.WRITE)
 	public void removeNode(String acAlias) {
-		nodes.remove(acAlias);
+		if (nodes.containsKey(acAlias)) {
+			nodes.remove(acAlias);			
+		}
 	}
 
 	@Override
@@ -58,5 +68,9 @@ public class NodeRepositoryBean implements NodeRepositoryBeanLocal {
 	public List<AgentCenter> getAgentCenters() {
 		return nodes.values().stream().collect(Collectors.toList());
 	}
+
+	
+
+	
 
 }

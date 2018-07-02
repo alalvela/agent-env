@@ -1,4 +1,4 @@
-package starter;
+package node2node;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,11 +31,19 @@ public class SlaveStarterServiceBean implements SlaveStarterServiceBeanLocal {
 	}
 	
 	@Override
-	public void register() {
+	public boolean register() {
 		AgentCenter local = props.getLocal();
 		String targetUrl = UrlBuilder.getUrl(props.getMaster().getAddress(), "master", "register");
-		client.target(targetUrl).request().post(Entity.json(local));
+		Response response = client.target(targetUrl).request().post(Entity.json(local));
+		
+		int status = response.getStatus();
+		return status > 199 && status < 300;
 	}
 
+	@Override
+	public void unregister() {	
+		String targetUrl = UrlBuilder.getUrl(props.getMaster().getAddress(), "master", "unregister/" + props.getLocal().getAlias());
+		client.target(targetUrl).request().delete();
+	}
    
 }

@@ -1,4 +1,4 @@
-package beans;
+package repository;
 
 import java.util.List;
 import java.util.Map;
@@ -11,6 +11,8 @@ import domain.AgentCenter;
 public interface NodeRepositoryBeanLocal {
 	
 	void addNode(AgentCenter ac);
+	
+	void addNodes(List<AgentCenter> acs);
 
 	void removeNode(String acAlias);
 	
