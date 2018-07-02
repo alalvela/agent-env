@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import domain.AID;
 import domain.AgentCenter;
 import util.rest.ExistingNodeAgentClasses;
 import util.rest.NewNodeAgentClasses;
@@ -17,7 +18,7 @@ public interface MasterStarterServiceBeanLocal {
 	
 	boolean postExisting(ExistingNodeAgentClasses existing);
 	
-	boolean postRunningAgents();
+	boolean postRunningAgents(AgentCenter ac, List<AID> running);
 	
 	void deleteNode(String alias);
 	

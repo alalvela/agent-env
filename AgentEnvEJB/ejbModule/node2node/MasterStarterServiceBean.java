@@ -11,6 +11,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import domain.AID;
 import domain.AgentCenter;
 import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
@@ -76,17 +77,6 @@ public class MasterStarterServiceBean implements MasterStarterServiceBeanLocal {
 				}
 			}
 		}	
-//		nodeRepo.getAgentCenters()
-//		.forEach( ac -> {
-//			if(!ac.equals(newAgentCenter)) {
-//				String targetUrl = UrlBuilder.getUrl(ac.getAddress(), "slave", "agents/classes/new");
-//				Response response = client.target(targetUrl).request().post(Entity.json(neww));
-//				
-//				if (!responseOK(response.getStatus())) {
-//					
-//				}
-//			}
-//		});
 		return true;
 	}
 	
@@ -104,11 +94,20 @@ public class MasterStarterServiceBean implements MasterStarterServiceBeanLocal {
 		}
 		return true;
 	}
-
+	
 	@Override
-	public boolean postRunningAgents() {
+	public boolean postRunningAgents(AgentCenter ac, List<AID> running) {
+		String targetUrl = UrlBuilder.getUrl(ac.getAddress(), "slave", "agents/running");
+		Response response = client.target(targetUrl).request().post(Entity.json(running));
+		if (!responseOK(response.getStatus())) {
+			Response response2 = client.target(targetUrl).request().post(Entity.json(running));
+			if (!responseOK(response2.getStatus())) {
+				return false;
+			}
+		}
 		return true;
 	}
+
 
 	@Override
 	public void deleteNode(String alias) {
@@ -125,5 +124,8 @@ public class MasterStarterServiceBean implements MasterStarterServiceBeanLocal {
 	private boolean responseOK(int status) {
 		return status > 199 && status < 300;
 	}
+
+
+	
 
 }

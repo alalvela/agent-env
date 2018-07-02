@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import domain.AID;
 import domain.AgentCenter;
 import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
@@ -59,6 +60,13 @@ public class SlaveStarterEndpointBean {
 		
 		nodeRepo.addNodes(nodes);
 		agentRepo.joinAgentTypes(classes);	
+	}
+	
+	@POST
+	@Path("/agents/running")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addRunningAgents(List<AID> running) {
+		running.forEach(ag -> agentRepo.addRunningAID(ag));
 	}
 
 	@DELETE

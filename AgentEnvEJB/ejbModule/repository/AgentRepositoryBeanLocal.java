@@ -21,8 +21,6 @@ public interface AgentRepositoryBeanLocal {
 
 	List<String> getLocalAgentTypes();
 	
-//	List<String> getAgentTypesAsList();
-	
 	Agent getAgent(AID aid);
 	
 	void addAgentToRunning(Agent agent);

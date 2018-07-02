@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import domain.AID;
 import domain.AgentCenter;
 import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
@@ -60,6 +61,12 @@ public class MasterStarterEndpointBean {
 		if (!masterService.postExisting(existing)) {
 			return;
 		}
+		
+		List<AID> runningAgs = agentRepository.getAllRunningAgents();
+		if (!masterService.postRunningAgents(agentCenter, runningAgs)) {
+			return;
+		}
+		System.out.println("ok+++++++++++++++++");
 	}
 
 	

@@ -53,6 +53,7 @@ public class NodeRepositoryBean implements NodeRepositoryBeanLocal {
 	}
 
 	@Override
+	@Lock(LockType.READ)
 	public boolean containsNode(String alias) {
 		return nodes.containsKey(alias);
 	}
