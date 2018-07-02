@@ -22,5 +22,13 @@ public enum Performative {
 	REQUEST, 
 	REQUEST_WHEN, 
 	REQUEST_WHENEVER, 
-	SUBSCRIBE
+	SUBSCRIBE;
+	
+	public static String toString(Performative performative) { 
+		return performative.name(); 
+	}
+	
+	public static Performative fromString(String performativeStr) { 
+		return Performative.valueOf(performativeStr); 
+	}
 }

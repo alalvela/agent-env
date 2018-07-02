@@ -1,9 +1,10 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class ACLMessage {
+public class ACLMessage implements Serializable {
 
 	public Performative performative;
 	public AID sender;
@@ -20,5 +21,11 @@ public class ACLMessage {
 	public String replyWith;
 	public String inReplyTo;
 	public long replyBy;
+	
+	@Override
+	public String toString() {
+		return "ACLMessage [performative=" + performative + ", sender=" + sender + ", recievers=" + recievers
+				+ ", replyTo=" + replyTo + ", content=" + content + "]";
+	}
 
 }

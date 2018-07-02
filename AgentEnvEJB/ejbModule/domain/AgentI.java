@@ -9,6 +9,8 @@ public interface AgentI extends Serializable {
 	
 	void start();
 	
+	void handleMessage(ACLMessage message);
+	
 	void stop();
 	
 }

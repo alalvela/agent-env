@@ -35,9 +35,10 @@ public class TestAgent extends Agent {
 		System.out.println("Test agent AID: " + id.toString());
 	}
 
+
 	@Override
-	protected void handleMessage(ACLMessage message) {
-		
+	public void handleMessage(ACLMessage message) {
+		System.out.println("Agent " + id + "recieved message: " + message);
 	}
 
 

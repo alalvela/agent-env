@@ -1,7 +1,8 @@
 package domain;
 
+import java.io.Serializable;
 
-public class AgentCenter {
+public class AgentCenter implements Serializable{
 
 	private String address;
 	private String alias;
