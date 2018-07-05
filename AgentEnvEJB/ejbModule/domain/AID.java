@@ -2,6 +2,8 @@ package domain;
 
 import java.io.Serializable;
 
+import com.google.gson.Gson;
+
 public class AID implements Serializable{
 
 	private String name;
@@ -97,7 +99,11 @@ public class AID implements Serializable{
 
 	@Override
 	public String toString() {
-		return "AID [name=" + name + ", agentCenter=" + agentCenter + ", agentType=" + agentType + "]";
+		return agentType.getModule() + ":" + agentType.getName() + ":" + name;
+	} 
+	
+	public String toJson() {
+		return new Gson().toJson(this);
 	}
 	
 	

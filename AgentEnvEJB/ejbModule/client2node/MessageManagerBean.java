@@ -57,17 +57,6 @@ public class MessageManagerBean implements MessageManagerBeanLocal {
 		
 	}
 	
-//	private void postMessage(AID aid, int idx, ACLMessage aclMessage) throws NamingException, JMSException {
-//		jmsCli.sendMessageToAgent(aid.getAgentCenter().getAddress(), aclMessage, idx);
-//	}
+
 }
 
-//		aclMessage.recievers.forEach(rec -> {	
-//			if (rec == null) throw new IllegalArgumentException("AID cannot be null");
-//			
-//			try {
-//				jmsCli.sendMessageToAgent(rec.getAgentCenter().getAddress(), aclMessage);
-//			} catch (NamingException | JMSException e) {
-//				e.printStackTrace();
-//			}			
-//		});

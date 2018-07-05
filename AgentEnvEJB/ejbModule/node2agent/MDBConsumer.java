@@ -12,6 +12,8 @@ import domain.ACLMessage;
 import domain.AID;
 import domain.Agent;
 import repository.AgentRepositoryBeanLocal;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @MessageDriven(
@@ -23,6 +25,9 @@ public class MDBConsumer implements MessageListener {
 	
 	@EJB
 	private AgentRepositoryBeanLocal agentRepo;
+	
+	@EJB
+	private SessionManager sessionManager;
 
 	@Override
 	public void onMessage(Message message) {		
@@ -47,6 +52,7 @@ public class MDBConsumer implements MessageListener {
 		Agent agent = agentRepo.getAgent(aid);
 		if (agent != null) {
 			agent.handleMessage(acl);
+			sessionManager.sendMessage(new WSMessage("NEW_MESSAGE", WSMessage.getNewMessage(acl.sender, aid, acl.content, acl.performative)));
 		} else {
 			System.out.println("Agent with aid : " + aid + " does not exist");
 		}

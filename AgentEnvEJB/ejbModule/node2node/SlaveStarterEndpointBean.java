@@ -21,6 +21,8 @@ import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
 import util.rest.ExistingNodeAgentClasses;
 import util.rest.NewNodeAgentClasses;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @Stateless
@@ -33,6 +35,10 @@ public class SlaveStarterEndpointBean {
 	
 	@EJB
 	private NodeRepositoryBeanLocal nodeRepo;
+	
+	@EJB
+	private SessionManager sessionManager;
+	
 	
 	@GET
 	@Path("/classes")
@@ -49,6 +55,7 @@ public class SlaveStarterEndpointBean {
 		
 		nodeRepo.addNode(ac);
 		agentRepo.addAgentTypes(ac.getAlias(), neww.getAgentClasses());
+		sessionManager.sendMessage(new WSMessage("NEW_TYPES", WSMessage.getNewTypeMessage(ac.getAlias(), neww.getAgentClasses())));
 	}
 	
 	@POST

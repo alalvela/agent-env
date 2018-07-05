@@ -124,14 +124,5 @@ public class AgentRepositoryBean implements AgentRepositoryBeanLocal {
 	public List<AID> getAllRunningAgents() {
 		return runningAgentAIDList;
 	}
-
-//	@Override
-//	public List<String> getAgentTypesAsList() {
-//		return agentTypeMap.values()
-//				.stream()
-//				.flatMap(x -> x.stream())
-//				.distinct()
-//				.collect(Collectors.toList());
-//	}
 	
 }

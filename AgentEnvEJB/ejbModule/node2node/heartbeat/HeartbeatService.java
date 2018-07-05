@@ -31,12 +31,12 @@ public class HeartbeatService {
 	}
 
  
-	@SuppressWarnings("unused")
-	@Schedule(second="*/45", minute="*", hour="*", info="MyTimer")
-    private void scheduledTimeout(final Timer t) {
-        System.out.println("Checking nodes from " + props.getLocal().getAlias());
-        this.checkNodes();
-    }
+//	@SuppressWarnings("unused")
+//	@Schedule(second="*/45", minute="*", hour="*", info="MyTimer")
+//    private void scheduledTimeout(final Timer t) {
+//        System.out.println("Checking nodes from " + props.getLocal().getAlias());
+//        this.checkNodes();
+//    }
 	
 	private void checkNodes() {
 		nodeRepo.getAgentCenters().forEach(ac -> {

@@ -16,6 +16,8 @@ import domain.AID;
 import domain.Agent;
 import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @Stateless
@@ -25,6 +27,9 @@ public class MasterNodeEndpoint {
 
 	@EJB
 	private NodeRepositoryBeanLocal nodeRepo;
+	
+	@EJB
+	private SessionManager sessionManager;
 	
 	@EJB
 	private AgentRepositoryBeanLocal agentRepo;
@@ -37,6 +42,7 @@ public class MasterNodeEndpoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addAgentToRunning(AID aid) {
 		agentRepo.addRunningAID(aid);
+		sessionManager.sendMessage(new WSMessage("NEW_RUNNING", aid.toJson()));
 		
 		restCli.notifyOfNewRunning(aid);
 	}

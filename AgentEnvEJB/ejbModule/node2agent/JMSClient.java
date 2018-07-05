@@ -51,6 +51,8 @@ public class JMSClient {
     	msg.setObject(aclMsg);
     	msg.setIntProperty("ordinal", ordinal);
     	jmsCtx.createProducer().send(queue, msg);
+    	
+    	cf.close();
     }
 
     private InitialContext getInitialContext(String hostAddress) throws NamingException {

@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import domain.AID;
 import domain.Agent;
 import repository.AgentRepositoryBeanLocal;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @Stateless
@@ -25,11 +27,16 @@ public class SlaveNodeEndpoint {
 	@EJB
 	private AgentRepositoryBeanLocal agentRepo;
 	
+	@EJB
+	private SessionManager sessionManager;
+	
 	@POST
 	@Path("/running")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addAgentToRunning(AID aid) {
 		agentRepo.addRunningAID(aid);
+		sessionManager.sendMessage(new WSMessage("NEW_RUNNING", aid.toJson()));
+
 	}
 	
 	@DELETE

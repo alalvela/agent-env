@@ -1,6 +1,7 @@
 package node2node;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -11,6 +12,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
+
 import domain.AID;
 import domain.AgentCenter;
 import repository.AgentRepositoryBeanLocal;
@@ -19,6 +22,8 @@ import util.PropertyBean;
 import util.UrlBuilder;
 import util.rest.ExistingNodeAgentClasses;
 import util.rest.NewNodeAgentClasses;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @Stateless
@@ -33,6 +38,9 @@ public class MasterStarterServiceBean implements MasterStarterServiceBeanLocal {
 
 	@EJB
 	private AgentRepositoryBeanLocal agentRepo;
+	
+	@EJB
+	private SessionManager sessionManager;
 	
 	private Client client;
 	
@@ -57,8 +65,11 @@ public class MasterStarterServiceBean implements MasterStarterServiceBeanLocal {
 		
 		List<String> agentClasses = response.readEntity(List.class);
 		agentRepo.addAgentTypes(agentCenter.getAlias(), agentClasses);
+		sessionManager.sendMessage(new WSMessage("NEW_TYPES", WSMessage.getNewTypeMessage(agentCenter.getAlias(), agentClasses)));
+
 		return agentClasses;
 	}
+	
 
 	@Override
 	public boolean postNew(NewNodeAgentClasses neww) {

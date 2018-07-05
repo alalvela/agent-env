@@ -26,6 +26,8 @@ import repository.AgentRepositoryBeanLocal;
 import repository.NodeRepositoryBeanLocal;
 import util.PropertyBean;
 import util.UrlBuilder;
+import ws.SessionManager;
+import ws.WSMessage;
 
 
 @Stateless
@@ -50,6 +52,9 @@ public class AgentManagerBean implements AgentManagerBeanLocal {
 	
 	@EJB
 	private NodeRepositoryBeanLocal nodeRepo;
+	
+	@EJB
+	private SessionManager sessionManager;
 	
 	
 	@GET
@@ -79,6 +84,10 @@ public class AgentManagerBean implements AgentManagerBeanLocal {
 			newAgent.start();
 			
 			agentRepo.addAgentToRunning(newAgent);
+			
+			//posalji ws poruku svim sesijama sa ovog noda
+			sessionManager.sendMessage(new WSMessage("NEW_RUNNING", newAgent.getAID().toJson()));
+			
 			notifyOfNewRunning(newAgent.getAID());	
 		} else {
 			AgentCenter targetAc = nodeRepo.getNode(nodeAlias);
